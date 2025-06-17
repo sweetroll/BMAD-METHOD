@@ -1,0 +1,66 @@
+name: tech-lead-workflow
+version: 1.0.0
+pack_type: agent-enhancement
+description: 'Agent Enhancement Extension: Rebalances BMAD workflow with collaborative just-in-time technical elaboration. Provides enhanced agents for high-level architecture, business-focused stories, and tech lead refinement. No orchestrator required - users interact with enhanced agents manually.'
+author: BMAD Community
+bmad_version: 4.0.0
+files:
+  agents:
+    - 'architect.md                      # Overrides core architect with high-level focus'
+    - sm.md
+    - 'tech-lead.md                     # New agent for collaborative refinement'
+    - 'tech-lead-workflow-orchestrator.md # Workflow documentation and guidance tool'
+  tasks:
+    - story-enhancement.md
+    - technical-decision-capture.md
+    - implementation-planning.md
+    - high-level-story-creation.md
+    - story-refinement.md
+  templates:
+    - high-level-architecture-tmpl.md
+    - framework-selection-tmpl.md
+    - quality-attributes-tmpl.md
+    - high-level-story-tmpl.md
+    - story-acceptance-criteria-tmpl.md
+    - story-refinement-tmpl.md
+    - tech-decision-tmpl.md
+    - implementation-plan-tmpl.md
+    - tech-lead-knowledge-base-tmpl.md
+  checklists:
+    - high-level-architecture-checklist.md
+    - high-level-story-checklist.md
+    - story-refinement-checklist.md
+required_data:
+  - filename: technical-preferences.md
+    description: Team's technology preferences and constraints (already exists in BMAD)
+    location: bmad-core/data/
+dependencies:
+  - bmad-orchestrator
+  - sm
+  - dev
+overrides:
+  - agent: architect
+    reason: Replaces detailed architect with high-level strategic focus
+  - agent: sm
+    reason: Replaces detailed scrum master with business-focused story creation
+post_install_message: |
+  Tech Lead Workflow Extension ready!
+
+  Key Changes:
+  - "Barry (/architect): High-level strategic architecture without implementation details"
+  - "Bruce (/sm): Business-focused story creation with HIGH_LEVEL status"
+  - "Beryl (/tech-lead): Collaborative technical refinement with manual review gates"
+  - Enhanced story workflow with status management
+
+  Workflow:
+  1. Bruce creates HIGH_LEVEL stories
+  2. Manual Gate 1: HIGH_LEVEL → APPROVED_FOR_REFINEMENT
+  3. Beryl enhances stories with developer steps → PENDING_DEVELOPMENT_APPROVAL
+  4. Manual Gate 2: PENDING_DEVELOPMENT_APPROVAL → APPROVED
+  5. BMAD dev agent implements when status = APPROVED
+
+  Features:
+  - "Just-in-time technical elaboration"
+  - Manual review gates for control
+  - "Tech lead knowledge base for cross-story insights"
+  - Full compatibility with existing BMAD dev agent
