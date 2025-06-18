@@ -1,16 +1,16 @@
 name: tech-lead-workflow
 version: 1.0.0
 pack_type: agent-enhancement
-description: 'Agent Enhancement Extension: Rebalances BMAD workflow with collaborative just-in-time technical elaboration. Provides enhanced agents for high-level architecture, business-focused stories, and tech lead refinement. No orchestrator required - users interact with enhanced agents manually.'
+description: Agent Enhancement Extension: Rebalances BMAD workflow with collaborative just-in-time technical elaboration. Provides enhanced agents for high-level architecture, business-focused stories, and tech lead refinement. No orchestrator required - users interact with enhanced agents manually.
 author: BMAD Community
-bmad_version: 4.0.0
+bmad_version: 4.6.0
 files:
   agents:
-    - 'architect.md                      # Overrides core architect with high-level focus'
+    - architect.md
     - sm.md
-    - 'tech-lead.md                     # New agent for collaborative refinement'
+    - tech-lead.md
   agent-teams:
-    - 'tech-lead-workflow-team.yml      # Complete fullstack team with enhanced workflow agents for Web UI environments'
+    - tech-lead-workflow-team.yml
   tasks:
     - story-enhancement.md
     - technical-decision-capture.md
@@ -48,18 +48,18 @@ post_install_message: |
   Tech Lead Workflow Extension ready!
 
   Key Enhancements:
-  - "Barry (/architect): High-level strategic architecture without implementation details"
-  - "Bruce (/sm): Business-focused story creation without technical details"
+  - Barry (/architect): High-level strategic architecture without implementation details
+  - Bruce (/sm): Business-focused story creation without technical details
 
   Available Agents:
-  - "Barry (/architect): High-level strategic architecture (CLI/IDE)"
-  - "Bruce (/sm): Business-focused story creation (CLI/IDE) "
-  - "Beryl (/tech-lead): Collaborative technical refinement (CLI/IDE)"
-  - "Tech Lead Workflow Team: Complete fullstack team with enhanced agents for Web UI"
+  - Barry (/architect): High-level strategic architecture (CLI/IDE)
+  - Bruce (/sm): Business-focused story creation (CLI/IDE) 
+  - Beryl (/tech-lead): Collaborative technical refinement (CLI/IDE)
+  - Tech Lead Workflow Team: Complete fullstack team with enhanced agents for Web UI
 
   CLI/IDE Usage:
   - Use individual enhanced agents as needed
   - Full collaborative workflow with manual review gates
 
   Web UI Usage:
-  - "Select \"Tech Lead Workflow Team\" for complete enhanced workflow with just-in-time technical elaboration"
+  - Select "Tech Lead Workflow Team" for complete enhanced workflow with just-in-time technical elaboration
