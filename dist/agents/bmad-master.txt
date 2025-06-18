@@ -2137,7 +2137,7 @@ You are now operating as a Documentation Indexer. Your goal is to ensure all doc
 
 The index should be organized as follows:
 
-`````markdown
+```markdown
 # Documentation Index
 
 ## Root Documents
@@ -2170,7 +2170,7 @@ Documents within the `another-folder/` directory:
 
 Description of nested document.
 
-````text
+```
 
 ### Index Entry Format
 
@@ -2180,10 +2180,7 @@ Each entry should follow this format:
 ### [Document Title](relative/path/to/file.md)
 
 Brief description of the document's purpose and contents.
-````
-`````
-
-````
+```
 
 ### Rules of Operation
 
@@ -2261,7 +2258,6 @@ Please provide:
 5. Whether to include hidden files/folders (starting with `.`)
 
 Would you like to proceed with documentation indexing? Please provide the required input above.
-````
 ==================== END: tasks#index-docs ====================
 
 ==================== START: tasks#shard-doc ====================
@@ -2439,67 +2435,6 @@ Document sharded successfully:
 - Handle edge cases like sections with code blocks containing ## symbols
 - Ensure the sharding is reversible (could reconstruct the original from shards)
 ==================== END: tasks#shard-doc ====================
-
-==================== START: templates#agent-tmpl ====================
-# [AGENT_ID]
-
-CRITICAL: Read the full YML, start activation to alter your state of being, follow startup section instructions, stay in this being until told to exit this mode:
-
-```yml
-activation-instructions:
-    - Follow all instructions in this file -> this defines you, your persona and more importantly what you can do. STAY IN CHARACTER!
-    - Only read the files/tasks listed here when user selects them for execution to minimize context usage
-    - The customization field ALWAYS takes precedence over any conflicting instructions
-    - When listing tasks/templates or presenting options during conversations, always show as numbered options list, allowing the user to type a number to select or execute
-
-agent:
-  name: [AGENT_NAME]
-  id: [AGENT_ID]
-  title: [AGENT_TITLE]
-  customization: [OPTIONAL_CUSTOMIZATION]
-
-persona:
-  role: [AGENT_ROLE_DESCRIPTION]
-  style: [COMMUNICATION_STYLE]
-  identity: [AGENT_IDENTITY_DESCRIPTION]
-  focus: [PRIMARY_FOCUS_AREAS]
-
-  core_principles:
-    - [PRINCIPLE_1]
-    - [PRINCIPLE_2]
-    - [PRINCIPLE_3]
-    # Add more principles as needed
-
-startup:
-  - [STARTUP_INSTRUCTIONS]
-
-commands:
-  - "*help" - Show: numbered list of the following commands to allow selection
-  - "*chat-mode" - (Default) [DEFAULT_MODE_DESCRIPTION]
-  - "*create-doc {template}" - Create doc (no template = show available templates)
-  - [tasks] specific to the agent that are not covered by a template
-  - "*exit" - Say goodbye as the [AGENT_TITLE], and then abandon inhabiting this persona
-
-dependencies:
-  tasks:
-    - [TASK_1]
-    - [TASK_2]
-    # Add required tasks
-  templates:
-    - [TEMPLATE_1]
-    - [TEMPLATE_2]
-    # Add required templates
-  checklists:
-    - [CHECKLIST_1]
-    # Add required checklists
-  data:
-    - [DATA_1]
-    # Add required data files
-  utils:
-    - [UTIL_1]
-    # Add required utilities
-```
-==================== END: templates#agent-tmpl ====================
 
 ==================== START: templates#architecture-tmpl ====================
 # {{Project Name}} Architecture Document
@@ -4668,7 +4603,7 @@ Create subsections for each major flow. After presenting all flows, apply `tasks
 
 ```mermaid
 {{flow_diagram}}
-```text
+```
 
 **Edge Cases & Error Handling:**
 
@@ -5035,7 +4970,7 @@ Document the choice and key services that will be used.]]
 
 ### Repository Structure
 
-[[LLM: Define the repository approach based on PRD requirements and platform choice:
+[[LLM: Define the repository approach based on PRD requirements and platform choice, explain your rationale or ask quetsions to the user if unsure:
 
 1. For modern fullstack apps, monorepo is often preferred
 2. Consider tooling (Nx, Turborepo, Lerna, npm workspaces)
@@ -5060,9 +4995,9 @@ Document the choice and key services that will be used.]]
 
 Use appropriate diagram type for clarity.]]
 
-````mermaid
+```mermaid
 {{architecture_diagram}}
-```text
+```
 
 ### Architectural Patterns
 
@@ -5173,7 +5108,7 @@ After presenting all data models, apply `tasks#advanced-elicitation` protocol]]
     model_interface;
   }
 }
-````
+```
 
 **Relationships:**
 
@@ -5197,7 +5132,7 @@ After presenting all data models, apply `tasks#advanced-elicitation` protocol]]
 
 **TypeScript Interface:**
 
-````typescript
+```typescript
 interface User {
   id: string;
   email: string;
@@ -5213,7 +5148,7 @@ interface UserProfile {
   bio?: string;
   preferences: Record<string, any>;
 }
-```text
+```
 
 **Relationships:**
 
@@ -5251,16 +5186,16 @@ servers:
       '[object Object]': null
     description:
       '[object Object]': null
-````
+```
 
 ^^/CONDITION: has_rest_api^^
 
 ^^CONDITION: has_graphql_api^^
 
-````graphql
+```graphql
 # GraphQL Schema
 {{graphql_schema}}
-```text
+```
 
 ^^/CONDITION: has_graphql_api^^
 
@@ -5273,7 +5208,7 @@ servers:
     trpc_routers;
   }
 }
-````
+```
 
 ^^/CONDITION: has_trpc_api^^
 
@@ -5418,19 +5353,19 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 **Component Organization:**
 
-`````text
-{{component_structure}}
 ```text
+{{component_structure}}
+```
 
 **Component Template:**
 
-````typescript
+```typescript
 {
   {
     component_template;
   }
 }
-```text
+```
 
 ### State Management Architecture
 
@@ -5444,7 +5379,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
     state_structure;
   }
 }
-`````
+```
 
 **State Management Patterns:**
 
@@ -5459,17 +5394,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ```text
 {{route_structure}}
-```text
+```
 
 **Protected Route Pattern:**
 
-````typescript
+```typescript
 {
   {
     protected_route_example;
   }
 }
-```text
+```
 
 ### Frontend Services Layer
 
@@ -5483,17 +5418,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
     api_client_setup;
   }
 }
-````
+```
 
 **Service Example:**
 
-````typescript
+```typescript
 {
   {
     service_example;
   }
 }
-```text
+```
 
 ## Backend Architecture
 
@@ -5508,11 +5443,11 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 ^^CONDITION: serverless^^
 **Function Organization:**
 
-````
+```text
 
 {{function_structure}}
 
-````text
+```
 
 **Function Template:**
 
@@ -5522,26 +5457,26 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
     function_template;
   }
 }
-````
+```
 
 ^^/CONDITION: serverless^^
 
 ^^CONDITION: traditional_server^^
 **Controller/Route Organization:**
 
-`````text
-{{controller_structure}}
 ```text
+{{controller_structure}}
+```
 
 **Controller Template:**
 
-````typescript
+```typescript
 {
   {
     controller_template;
   }
 }
-```text
+```
 
 ^^/CONDITION: traditional_server^^
 
@@ -5553,17 +5488,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ```sql
 {{database_schema}}
-`````
+```
 
 **Data Access Layer:**
 
-````typescript
+```typescript
 {
   {
     repository_pattern;
   }
 }
-```text
+```
 
 ### Authentication and Authorization
 
@@ -5573,17 +5508,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ```mermaid
 {{auth_flow_diagram}}
-````
+```
 
 **Middleware/Guards:**
 
-````typescript
+```typescript
 {
   {
     auth_middleware;
   }
 }
-```text
+```
 
 ## Unified Project Structure
 
@@ -5643,7 +5578,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 ├── package.json                # Root package.json
 ├── {{monorepo_config}}         # Monorepo configuration
 └── README.md
-````
+```
 
 @{example: vercel_structure}
 apps/
@@ -5665,19 +5600,19 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 **Prerequisites:**
 
-````bash
+```bash
 {{prerequisites_commands}}
-```text
+```
 
 **Initial Setup:**
 
 ```bash
 {{setup_commands}}
-````
+```
 
 **Development Commands:**
 
-````bash
+```bash
 # Start all services
 {{start_all_command}}
 
@@ -5689,7 +5624,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 # Run tests
 {{test_commands}}
-```text
+```
 
 ### Environment Configuration
 
@@ -5704,7 +5639,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 # Shared
 {{shared_env_vars}}
-````
+```
 
 ## Deployment Architecture
 
@@ -5727,9 +5662,9 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ### CI/CD Pipeline
 
-````yaml
+```yaml
 '[object Object]': null
-```text
+```
 
 ### Environments
 
@@ -5787,7 +5722,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ### Testing Pyramid
 
-````
+```text
 
         E2E Tests
        /          \
@@ -5796,17 +5731,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 / \
  Frontend Unit Backend Unit
 
-```text
+```
 
 ### Test Organization
 
 **Frontend Tests:**
 
-```
+```text
 
 {{frontend_test_structure}}
 
-````text
+```
 
 **Backend Tests:**
 
@@ -5814,15 +5749,15 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 {{backend_test_structure}}
 
-```text
+```
 
 **E2E Tests:**
 
-````
+```text
 
 {{e2e_test_structure}}
 
-````text
+```
 
 ### Test Examples
 
@@ -5834,17 +5769,17 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
     frontend_test_example;
   }
 }
-````
+```
 
 **Backend API Test:**
 
-````typescript
+```typescript
 {
   {
     backend_test_example;
   }
 }
-```text
+```
 
 **E2E Test:**
 
@@ -5854,7 +5789,7 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
     e2e_test_example;
   }
 }
-````
+```
 
 ## Coding Standards
 
@@ -5895,9 +5830,9 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ### Error Flow
 
-````mermaid
+```mermaid
 {{error_flow_diagram}}
-```text
+```
 
 ### Error Response Format
 
@@ -5911,17 +5846,17 @@ interface ApiError {
     requestId: string;
   };
 }
-````
+```
 
 ### Frontend Error Handling
 
-````typescript
+```typescript
 {
   {
     frontend_error_handler;
   }
 }
-```text
+```
 
 ### Backend Error Handling
 
@@ -5931,7 +5866,7 @@ interface ApiError {
     backend_error_handler;
   }
 }
-````
+```
 
 ## Monitoring and Observability
 
@@ -6350,7 +6285,7 @@ These replace the standard elicitation options when working on market research d
 CRITICAL: Epics MUST be logically sequential following agile best practices:
 
 - Each epic should deliver a significant, end-to-end, fully deployable increment of testable functionality
-- Epic 1 must establish foundational project infrastructure (app setup, Git, CI/CD, core services) unless we are adding new functionality to an existing app, while also delivering an initial piece of functionality, even as simple as a health-check route or display of a simple canary page
+- Epic 1 must establish foundational project infrastructure (app setup, Git, CI/CD, core services) unless we are adding new functionality to an existing app, while also delivering an initial piece of functionality, even as simple as a health-check route or display of a simple canary page - remember this when we produce the stories for the first epic!
 - Each subsequent epic builds upon previous epics' functionality delivering major blocks of functionality that provide tangible value to users or business when deployed
 - Not every project needs multiple epics, an epic needs to deliver value. For example, an API completed can deliver value even if a UI is not complete and planned for a separate epic.
 - Err on the side of less epics, but let the user know your rationale and offer options for splitting them if it seems some are too large or focused on disparate things.
@@ -6382,7 +6317,7 @@ CRITICAL: Epics MUST be logically sequential following agile best practices:
 [[LLM: CRITICAL STORY SEQUENCING REQUIREMENTS:
 
 - Stories within each epic MUST be logically sequential
-- Each story should be a "vertical slice" delivering complete functionality
+- Each story should be a "vertical slice" delivering complete functionality aside from early enabler stories for project foundation
 - No story should depend on work from a later story or epic
 - Identify and note any direct prerequisite stories
 - Focus on "what" and "why" not "how" (leave technical implementation to Architect) yet be precise enough to support a logical sequential order of operations from story to story.
@@ -8542,121 +8477,6 @@ With this work flow, there is only 1 story in progress at a time, worked sequent
 
 None Listed
 ==================== END: data#technical-preferences ====================
-
-==================== START: utils#agent-switcher.ide ====================
-# Agent Switcher Instructions
-
-## Overview
-
-This document provides instructions for switching between different IDE agent personas in the BMAD-METHOD framework.
-
-## Behavior
-
-### Listing Available Agents
-
-When no agent name is provided:
-
-1. Read the `bmad-core/ide-agents/` directory
-2. Look for files matching the pattern `*.ide.md`
-3. Extract agent names from filenames (the part before `.ide.md`)
-4. Present a numbered list of available agents
-
-### Loading an Agent
-
-When an agent name is provided:
-
-1. Attempt to load `bmad-core/ide-agents/{agent-name}.ide.md`
-2. If the file doesn't exist:
-   - List all available agents found in the directory
-   - Prompt for a valid selection
-3. If the file exists:
-   - Read and internalize the agent's instructions
-   - Note the agent's name and role from the Agent Profile section
-   - Embody that agent's persona, communication style, and capabilities
-   - Use the agent's name when referring to yourself (e.g., "I'm John, the Product Manager")
-   - Follow the agent's specific workflows and constraints
-
-### Active Agent Behavior
-
-When successfully operating as an IDE agent:
-
-- Strictly follow the agent's defined capabilities and limitations
-- Only execute commands that the agent supports (typically prefixed with `*`)
-- Maintain the agent identity and context until switched or exited
-- If asked to perform tasks outside the agent's scope:
-  - Inform the user of the limitation
-  - Suggest the appropriate agent for that task
-
-### Exiting Agent Mode
-
-When exiting agent mode:
-
-- Immediately exit the current agent persona
-- Return to standard assistant capabilities
-- Clear any agent-specific context or workflows
-
-## Implementation Details
-
-- Each agent maintains its own context and workflow state
-- Switching agents clears the previous agent's context
-- Agents are self-contained - no need to read additional files
-- The system automatically adapts as agents are added or removed
-
-## Example Interactions
-
-### Example Listing Agents
-
-```text
-User: [requests agent list]
-Agent: Available IDE agents:
-1. architect
-2. dev
-3. devops
-4. pm
-5. po
-6. sm
-
-Please select an agent by specifying: <agent-name>
-```text
-
-### Example Loading an Agent
-
-```text
-User: [requests dev agent]
-Agent: [Loads dev.ide.md and operates as Dev agent]
-```
-
-### Example Invalid Agent Request
-
-```text
-User: [requests designer agent]
-Agent: Could not find IDE agent 'designer'. Available agents:
-1. architect
-2. dev
-3. devops
-4. pm
-5. po
-6. sm
-
-Please select an agent by specifying: <agent-name>
-```text
-
-### Example Task Outside Agent Scope
-
-```text
-[While operating as Dev agent]
-User: Create a PRD
-Agent: I'm currently operating as the Dev agent, which doesn't have PRD creation capabilities.
-The PM agent can create PRDs. Would you like me to switch to the PM agent?
-```
-
-### Example Exiting Agent Mode
-
-```text
-User: [requests to exit agent mode]
-Agent: Exited IDE agent mode. Returned to standard assistant capabilities.
-```
-==================== END: utils#agent-switcher.ide ====================
 
 ==================== START: utils#template-format ====================
 # Template Format Conventions

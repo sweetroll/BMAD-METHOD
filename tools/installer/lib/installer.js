@@ -23,11 +23,22 @@ class Installer {
     const spinner = ora("Analyzing installation directory...").start();
 
     try {
-      // Resolve installation directory
-      let installDir = path.resolve(config.directory);
+      // Store the original CWD where npx was executed
+      const originalCwd = process.env.INIT_CWD || process.env.PWD || process.cwd();
+      
+      // Resolve installation directory relative to where the user ran the command
+      let installDir = path.isAbsolute(config.directory) 
+        ? config.directory 
+        : path.resolve(originalCwd, config.directory);
+        
       if (path.basename(installDir) === '.bmad-core') {
         // If user points directly to .bmad-core, treat its parent as the project root
         installDir = path.dirname(installDir);
+      }
+      
+      // Log resolved path for clarity
+      if (!path.isAbsolute(config.directory)) {
+        spinner.text = `Resolving "${config.directory}" to: ${installDir}`;
       }
 
       // Check if directory exists and handle non-existent directories
@@ -74,6 +85,7 @@ class Installer {
               }
             }
           ]);
+          // Preserve the original CWD for the recursive call
           config.directory = newDirectory;
           return await this.install(config); // Recursive call with new directory
         } else if (action === 'create') {
@@ -324,6 +336,12 @@ class Installer {
     const expansionFiles = await this.installExpansionPacks(installDir, config.expansionPacks, spinner);
     files.push(...expansionFiles);
 
+    // Install web bundles if requested
+    if (config.includeWebBundles && config.webBundlesDirectory) {
+      spinner.text = "Installing web bundles...";
+      await this.installWebBundles(config.webBundlesDirectory, config, spinner);
+    }
+
     // Set up IDE integration if requested
     const ides = config.ides || (config.ide ? [config.ide] : []);
     if (ides.length > 0) {
@@ -573,6 +591,11 @@ class Installer {
       console.log(chalk.green(`✓ Expansion packs installed: ${packNames}`));
     }
     
+    if (config.includeWebBundles && config.webBundlesDirectory) {
+      const bundleInfo = this.getWebBundleInfo(config);
+      console.log(chalk.green(`✓ Web bundles (${bundleInfo}) installed to: ${config.webBundlesDirectory}`));
+    }
+    
     if (ides.length > 0) {
       const ideNames = ides.map(ide => {
         const ideConfig = configLoader.getIdeConfiguration(ide);
@@ -582,11 +605,13 @@ class Installer {
     }
 
     // Information about web bundles
-    console.log(chalk.bold("\n📦 Web Bundles Available:"));
-    console.log("Pre-built web bundles are available in the project distribution:");
-    console.log(chalk.cyan(`  ${path.join(path.dirname(installDir), 'dist')}/`));
-    console.log("These bundles work independently and can be shared, moved, or used");
-    console.log("in other projects as standalone files.");
+    if (!config.includeWebBundles) {
+      console.log(chalk.bold("\n📦 Web Bundles Available:"));
+      console.log("Pre-built web bundles are available and can be added later:");
+      console.log(chalk.cyan("  Run the installer again to add them to your project"));
+      console.log("These bundles work independently and can be shared, moved, or used");
+      console.log("in other projects as standalone files.");
+    }
 
     if (config.installType === "single-agent") {
       console.log(
@@ -795,6 +820,103 @@ class Installer {
     }
 
     return installedFiles;
+  }
+
+  getWebBundleInfo(config) {
+    const webBundleType = config.webBundleType || 'all';
+    
+    switch (webBundleType) {
+      case 'all':
+        return 'all bundles';
+      case 'agents':
+        return 'individual agents only';
+      case 'teams':
+        return config.selectedWebBundleTeams ? 
+          `teams: ${config.selectedWebBundleTeams.join(', ')}` : 
+          'selected teams';
+      case 'custom':
+        const parts = [];
+        if (config.selectedWebBundleTeams && config.selectedWebBundleTeams.length > 0) {
+          parts.push(`teams: ${config.selectedWebBundleTeams.join(', ')}`);
+        }
+        if (config.includeIndividualAgents) {
+          parts.push('individual agents');
+        }
+        return parts.length > 0 ? parts.join(' + ') : 'custom selection';
+      default:
+        return 'selected bundles';
+    }
+  }
+
+  async installWebBundles(webBundlesDirectory, config, spinner) {
+    // Ensure modules are initialized
+    await initializeModules();
+    
+    try {
+      // Find the dist directory in the BMAD installation
+      const distDir = configLoader.getDistPath();
+      
+      if (!(await fileManager.pathExists(distDir))) {
+        console.warn(chalk.yellow('Web bundles not found. Run "npm run build" to generate them.'));
+        return;
+      }
+
+      // Ensure web bundles directory exists
+      await fileManager.ensureDirectory(webBundlesDirectory);
+      
+      const webBundleType = config.webBundleType || 'all';
+      
+      if (webBundleType === 'all') {
+        // Copy the entire dist directory structure
+        await fileManager.copyDirectory(distDir, webBundlesDirectory);
+        console.log(chalk.green(`✓ Installed all web bundles to: ${webBundlesDirectory}`));
+      } else {
+        let copiedCount = 0;
+        
+        // Copy specific selections based on type
+        if (webBundleType === 'agents' || (webBundleType === 'custom' && config.includeIndividualAgents)) {
+          const agentsSource = path.join(distDir, 'agents');
+          const agentsTarget = path.join(webBundlesDirectory, 'agents');
+          if (await fileManager.pathExists(agentsSource)) {
+            await fileManager.copyDirectory(agentsSource, agentsTarget);
+            console.log(chalk.green(`✓ Copied individual agent bundles`));
+            copiedCount += 10; // Approximate count for agents
+          }
+        }
+        
+        if (webBundleType === 'teams' || webBundleType === 'custom') {
+          if (config.selectedWebBundleTeams && config.selectedWebBundleTeams.length > 0) {
+            const teamsSource = path.join(distDir, 'teams');
+            const teamsTarget = path.join(webBundlesDirectory, 'teams');
+            await fileManager.ensureDirectory(teamsTarget);
+            
+            for (const teamId of config.selectedWebBundleTeams) {
+              const teamFile = `${teamId}.txt`;
+              const sourcePath = path.join(teamsSource, teamFile);
+              const targetPath = path.join(teamsTarget, teamFile);
+              
+              if (await fileManager.pathExists(sourcePath)) {
+                await fileManager.copyFile(sourcePath, targetPath);
+                copiedCount++;
+                console.log(chalk.green(`✓ Copied team bundle: ${teamId}`));
+              }
+            }
+          }
+        }
+        
+        // Always copy expansion packs if they exist
+        const expansionSource = path.join(distDir, 'expansion-packs');
+        const expansionTarget = path.join(webBundlesDirectory, 'expansion-packs');
+        if (await fileManager.pathExists(expansionSource)) {
+          await fileManager.copyDirectory(expansionSource, expansionTarget);
+          console.log(chalk.green(`✓ Copied expansion pack bundles`));
+        }
+        
+        console.log(chalk.green(`✓ Installed ${copiedCount} selected web bundles to: ${webBundlesDirectory}`));
+      }
+    } catch (error) {
+      console.error(chalk.red(`Failed to install web bundles: ${error.message}`));
+    }
   }
 
   async findInstallation() {
