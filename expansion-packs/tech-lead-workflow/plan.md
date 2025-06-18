@@ -12,6 +12,7 @@
 ## Problem Statement
 
 Current BMAD workflow forces premature technical detail at wrong stages:
+
 - Architects pressured into implementation specifics too early
 - Scrum Masters create technically detailed stories before collaborative design
 - Developers receive pre-made technical decisions without collaborative input
@@ -22,6 +23,7 @@ This pack introduces a Tech Lead persona that bridges high-level architecture wi
 ## Target Users
 
 Development teams who want:
+
 - Natural agile workflow timing for technical decisions
 - Collaborative technical design between leads and developers
 - High-level architecture without premature implementation details
@@ -85,15 +87,15 @@ Users must add these files to `bmad-core/data/`:
   - Purpose: Guide framework and technology choices
   - Example: Framework preferences, coding standards, tooling choices
 
-*Note: This pack primarily uses existing BMAD data files and enhances workflow timing rather than requiring new domain-specific data.*
+_Note: This pack primarily uses existing BMAD data files and enhances workflow timing rather than requiring new domain-specific data._
 
 ## Workflow Overview
 
 1. **High-Level Architecture**: Enhanced Architect creates strategic framework decisions and quality attributes
 2. **High-Level Stories**: Enhanced Scrum Master creates business-focused user stories (status: HIGH_LEVEL)
-3. **Manual Review Gate 1**: Product Owner manually updates status to APPROVED_FOR_REFINEMENT
+3. **Manual Review Gate 1**: User manually updates status to APPROVED_FOR_REFINEMENT
 4. **Collaborative Refinement**: Tech Lead works with Developer to elaborate technical implementation and updates status to PENDING_DEVELOPMENT_APPROVAL
-5. **Manual Review Gate 2**: Product Owner manually updates status to APPROVED (for BMAD dev agent compatibility)
+5. **Manual Review Gate 2**: User manually updates status to APPROVED (for BMAD dev agent compatibility)
 6. **Implementation**: BMAD dev agent executes with maintained technical context and documented decisions
 
 ## Integration Points
@@ -105,7 +107,7 @@ Users must add these files to `bmad-core/data/`:
 ## Success Criteria
 
 - [ ] All components created and cross-referenced
-- [ ] No orphaned task/template references  
+- [ ] No orphaned task/template references
 - [ ] Enhanced agents maintain backward compatibility
 - [ ] Orchestrator provides clear workflow guidance
 - [ ] README includes migration from current workflow

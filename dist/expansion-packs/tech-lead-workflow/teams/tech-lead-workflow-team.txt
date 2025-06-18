@@ -1069,16 +1069,16 @@ dependencies:
 
 ### Status Workflow
 1. **HIGH_LEVEL** - Story created by Scrum Master with business context
-2. **APPROVED_FOR_REFINEMENT** - Manual approval by Product Owner to begin tech lead collaboration
+2. **APPROVED_FOR_REFINEMENT** - Manual approval by user to begin tech lead collaboration
 3. **IN_REFINEMENT** - Tech Lead actively working with developer on technical approach
-4. **PENDING_DEVELOPMENT_APPROVAL** - Tech Lead has enhanced story, awaiting Product Owner approval
-5. **APPROVED** - Product Owner approval for BMAD dev agent to commence implementation
+4. **PENDING_DEVELOPMENT_APPROVAL** - Tech Lead has enhanced story, awaiting user approval
+5. **APPROVED** - User approval for BMAD dev agent to commence implementation
 6. **IN_PROGRESS** - Developer actively implementing the story
 7. **DONE** - Story completed and validated
 
 ### Manual Review Gates
-- **Gate 1**: HIGH_LEVEL → APPROVED_FOR_REFINEMENT (Product Owner manually updates status)
-- **Gate 2**: PENDING_DEVELOPMENT_APPROVAL → APPROVED (Product Owner manually updates status)
+- **Gate 1**: HIGH_LEVEL → APPROVED_FOR_REFINEMENT (User manually updates status)
+- **Gate 2**: PENDING_DEVELOPMENT_APPROVAL → APPROVED (User manually updates status)
 
 ## Notes
 
@@ -1146,7 +1146,7 @@ dependencies:
 - **Developer collaboration**: [DEVELOPER_NAMES]
 - **Key decisions**: [SUMMARY_OF_MAJOR_DECISIONS]
 - **Status after refinement**: PENDING_DEVELOPMENT_APPROVAL
-- **Awaiting**: Product Owner approval to change status to APPROVED
+- **Awaiting**: User approval to change status to APPROVED
 
 ---
 
@@ -3076,7 +3076,7 @@ Transform approved business stories (status: APPROVED_FOR_REFINEMENT) into enhan
 
 ## When to Use This Task
 
-- **After Manual Approval** - When Product Owner has updated story status to APPROVED_FOR_REFINEMENT
+- **After Manual Approval** - When user has updated story status to APPROVED_FOR_REFINEMENT
 - **Before Development Begins** - When implementation team needs actionable development tasks
 - **Collaborative Refinement** - When technical approach needs developer input and agreement
 - **Status Transition** - When moving story from APPROVED_FOR_REFINEMENT to PENDING_DEVELOPMENT_APPROVAL
@@ -3084,7 +3084,7 @@ Transform approved business stories (status: APPROVED_FOR_REFINEMENT) into enhan
 ## Prerequisites
 
 - Story exists with status APPROVED_FOR_REFINEMENT and complete business context
-- Product Owner has manually approved story for technical refinement
+- User has manually approved story for technical refinement
 - Business requirements, acceptance criteria, and user value are clearly documented
 - Architecture context is available for technical decision guidance
 - Developer availability for collaborative refinement session
@@ -3172,7 +3172,7 @@ Transform approved business stories (status: APPROVED_FOR_REFINEMENT) into enhan
 - Add Tech Lead name and refinement date to story metadata
 - Document developer collaboration participants and key decisions made
 - Update last modified timestamp to reflect enhancement completion
-- Note that Product Owner must manually approve status change to READY_FOR_DEVELOPMENT
+- Note that user must manually approve status change to APPROVED
 
 #### 4.3 Create Definition of Done
 - Define clear completion criteria that include both business and technical validation
@@ -3259,7 +3259,7 @@ Transform approved business stories (status: APPROVED_FOR_REFINEMENT) into enhan
 - Testing strategy validates both user experience and technical functionality
 
 ### Process Effectiveness Metrics
-- Time from HIGH_LEVEL to READY_FOR_DEVELOPMENT status
+- Time from HIGH_LEVEL to APPROVED status
 - Developer confidence and satisfaction with implementation guidance
 - Business stakeholder satisfaction with preserved user value focus
 - Successful completion rate of enhanced stories without major rework
@@ -3280,7 +3280,7 @@ Transform approved business stories (status: APPROVED_FOR_REFINEMENT) into enhan
 
 ### After Enhancement
 - **Validate Quality** - Use story refinement checklist to ensure enhancement completeness
-- **Update Status** - Change story status to READY_FOR_DEVELOPMENT and update metadata
+- **Update Status** - Change story status to PENDING_DEVELOPMENT_APPROVAL and update metadata
 - **Share Learning** - Capture insights and patterns for future story enhancement
 - **Monitor Success** - Track implementation success to improve future enhancement process
 

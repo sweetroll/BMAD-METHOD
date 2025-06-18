@@ -486,16 +486,16 @@ Create high-level user stories that focus on business value, user outcomes, and 
 
 ### Status Workflow
 1. **HIGH_LEVEL** - Story created by Scrum Master with business context
-2. **APPROVED_FOR_REFINEMENT** - Manual approval by Product Owner to begin tech lead collaboration
+2. **APPROVED_FOR_REFINEMENT** - Manual approval by user to begin tech lead collaboration
 3. **IN_REFINEMENT** - Tech Lead actively working with developer on technical approach
-4. **PENDING_DEVELOPMENT_APPROVAL** - Tech Lead has enhanced story, awaiting Product Owner approval
-5. **APPROVED** - Product Owner approval for BMAD dev agent to commence implementation
+4. **PENDING_DEVELOPMENT_APPROVAL** - Tech Lead has enhanced story, awaiting user approval
+5. **APPROVED** - User approval for BMAD dev agent to commence implementation
 6. **IN_PROGRESS** - Developer actively implementing the story
 7. **DONE** - Story completed and validated
 
 ### Manual Review Gates
-- **Gate 1**: HIGH_LEVEL → APPROVED_FOR_REFINEMENT (Product Owner manually updates status)
-- **Gate 2**: PENDING_DEVELOPMENT_APPROVAL → APPROVED (Product Owner manually updates status)
+- **Gate 1**: HIGH_LEVEL → APPROVED_FOR_REFINEMENT (User manually updates status)
+- **Gate 2**: PENDING_DEVELOPMENT_APPROVAL → APPROVED (User manually updates status)
 
 ## Notes
 
@@ -563,7 +563,7 @@ Create high-level user stories that focus on business value, user outcomes, and 
 - **Developer collaboration**: [DEVELOPER_NAMES]
 - **Key decisions**: [SUMMARY_OF_MAJOR_DECISIONS]
 - **Status after refinement**: PENDING_DEVELOPMENT_APPROVAL
-- **Awaiting**: Product Owner approval to change status to APPROVED
+- **Awaiting**: User approval to change status to APPROVED
 
 ---
 
