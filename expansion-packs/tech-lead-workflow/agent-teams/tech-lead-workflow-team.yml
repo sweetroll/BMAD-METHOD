@@ -1,0 +1,16 @@
+bundle:
+  name: Tech Lead Workflow Team
+  icon: 🎯
+  description: Complete BMAD fullstack team with enhanced workflow agents - high-level strategic architect (Barry), business-focused scrum master (Bruce), and collaborative tech lead (Beryl) for just-in-time technical elaboration.
+agents:
+  - 'bmad-orchestrator                    # Core orchestrator for overall project management'
+  - analyst
+  - pm
+  - 'ux-expert                           # Core UX expert for user experience design'
+  - 'architect                           # Enhanced Barry - High-level strategic architecture'
+  - po
+  - 'sm                                  # Enhanced Bruce - Business-focused story creation'
+  - 'tech-lead                           # New Beryl - Collaborative technical refinement'
+workflows:
+  - 'greenfield-fullstack               # Web application greenfield development'
+  - 'brownfield-fullstack              # Web application enhancement and maintenance'

@@ -31,11 +31,6 @@ Development teams who want:
 
 ### Agents
 
-- [ ] `tech-lead-workflow-orchestrator` - **CREATED**: Lightweight workflow documentation tool
-  - **Purpose**: Process guidance, status tracking, handoff documentation
-  - **Functionality**: Documents story status, suggests next agent, tracks handoffs
-  - **Approach**: Manual control - no automation, just better organization
-  - **Agent Name**: Tech Lead Workflow Guide - Helps organize and track workflow process
 - [ ] `architect` - **OVERRIDES CORE**: Strategic high-level architecture without implementation details
   - Tasks used: create-doc, create-deep-research-prompt, document-project
   - Templates used: high-level-architecture-tmpl, framework-selection-tmpl, quality-attributes-tmpl
@@ -47,10 +42,18 @@ Development teams who want:
   - Data required: bmad-kb
   - **Override Strategy**: Replaces core sm.md with business-focused version
 - [ ] `tech-lead` - **CREATED**: Collaborative technical refinement and implementation planning
-  - Tasks used: story-refinement, technical-decision-capture, implementation-planning, create-doc
-  - Templates used: story-refinement-tmpl, tech-decision-tmpl, implementation-plan-tmpl
+  - Tasks used: story-enhancement, technical-decision-capture, create-doc
+  - Templates used: high-level-story-tmpl, tech-decision-tmpl, tech-lead-knowledge-base-tmpl
   - Data required: technical-preferences
   - **Agent Name**: Beryl - Collaborative Tech Lead specializing in just-in-time technical elaboration
+
+### Agent Teams
+
+- [ ] `tech-lead-workflow-team.yml` - **CREATED**: Complete fullstack team with enhanced workflow agents
+  - **Purpose**: Provides complete BMAD process with enhanced architect, SM, and new tech lead
+  - **Agents**: bmad-orchestrator, analyst, pm, ux-expert, architect (Barry), po, sm (Bruce), tech-lead (Beryl)
+  - **Workflows**: greenfield-fullstack, brownfield-fullstack
+  - **Target**: Web UI users who want complete enhanced workflow with just-in-time technical elaboration
 
 ### Tasks
 

@@ -9,7 +9,8 @@ files:
     - 'architect.md                      # Overrides core architect with high-level focus'
     - sm.md
     - 'tech-lead.md                     # New agent for collaborative refinement'
-    - 'tech-lead-workflow-orchestrator.md # Workflow documentation and guidance tool'
+  agent-teams:
+    - 'tech-lead-workflow-team.yml      # Complete fullstack team with enhanced workflow agents for Web UI environments'
   tasks:
     - story-enhancement.md
     - technical-decision-capture.md
@@ -46,21 +47,19 @@ overrides:
 post_install_message: |
   Tech Lead Workflow Extension ready!
 
-  Key Changes:
+  Key Enhancements:
   - "Barry (/architect): High-level strategic architecture without implementation details"
-  - "Bruce (/sm): Business-focused story creation with HIGH_LEVEL status"
-  - "Beryl (/tech-lead): Collaborative technical refinement with manual review gates"
-  - Enhanced story workflow with status management
+  - "Bruce (/sm): Business-focused story creation without technical details"
 
-  Workflow:
-  1. Bruce creates HIGH_LEVEL stories
-  2. Manual Gate 1: HIGH_LEVEL → APPROVED_FOR_REFINEMENT
-  3. Beryl enhances stories with developer steps → PENDING_DEVELOPMENT_APPROVAL
-  4. Manual Gate 2: PENDING_DEVELOPMENT_APPROVAL → APPROVED
-  5. BMAD dev agent implements when status = APPROVED
+  Available Agents:
+  - "Barry (/architect): High-level strategic architecture (CLI/IDE)"
+  - "Bruce (/sm): Business-focused story creation (CLI/IDE) "
+  - "Beryl (/tech-lead): Collaborative technical refinement (CLI/IDE)"
+  - "Tech Lead Workflow Team: Complete fullstack team with enhanced agents for Web UI"
 
-  Features:
-  - "Just-in-time technical elaboration"
-  - Manual review gates for control
-  - "Tech lead knowledge base for cross-story insights"
-  - Full compatibility with existing BMAD dev agent
+  CLI/IDE Usage:
+  - Use individual enhanced agents as needed
+  - Full collaborative workflow with manual review gates
+
+  Web UI Usage:
+  - "Select \"Tech Lead Workflow Team\" for complete enhanced workflow with just-in-time technical elaboration"
