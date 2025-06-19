@@ -1,3 +1,24 @@
+## [4.6.3](https://github.com/bmadcode/BMAD-METHOD/compare/v4.6.2...v4.6.3) (2025-06-19)
+
+
+### Bug Fixes
+
+* SM fixed file resolution issue in v4 ([61ab116](https://github.com/bmadcode/BMAD-METHOD/commit/61ab1161e59a92d657ab663082abcaf26729fa6b))
+
+## [4.6.2](https://github.com/bmadcode/BMAD-METHOD/compare/v4.6.1...v4.6.2) (2025-06-19)
+
+
+### Bug Fixes
+
+* installer upgrade path fixed ([bd6a558](https://github.com/bmadcode/BMAD-METHOD/commit/bd6a55892906077a700f488bde175b57e846729d))
+
+## [4.6.1](https://github.com/bmadcode/BMAD-METHOD/compare/v4.6.0...v4.6.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* expansion pack builder now includes proper dependencies from core as needed, and default template file name save added to template llm instructions ([9dded00](https://github.com/bmadcode/BMAD-METHOD/commit/9dded003565879901246885d60787695e0d0b7bd))
+
 # [4.6.0](https://github.com/bmadcode/BMAD-METHOD/compare/v4.5.1...v4.6.0) (2025-06-18)
 
 
