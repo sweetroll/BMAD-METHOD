@@ -820,6 +820,8 @@ Choose an action (0-9 - 9 to bypass - HELP for explanation of these options):
 ==================== START: templates#project-brief-tmpl ====================
 # Project Brief: {{Project Name}}
 
+[[LLM: The default path and filename unless specified is docs/brief.md]]
+
 [[LLM: This template guides creation of a comprehensive Project Brief that serves as the foundational input for product development.
 
 Start by asking the user which mode they prefer:
@@ -1050,6 +1052,8 @@ These replace the standard elicitation options when working on project brief doc
 
 ==================== START: templates#market-research-tmpl ====================
 # Market Research Report: {{Project/Product Name}}
+
+[[LLM: The default path and filename unless specified is docs/market-research.md]]
 
 [[LLM: This template guides the creation of a comprehensive market research report. Begin by understanding what market insights the user needs and why. Work through each section systematically, using the appropriate analytical frameworks based on the research objectives.]]
 
@@ -1314,6 +1318,8 @@ These replace the standard elicitation options when working on market research d
 
 ==================== START: templates#competitor-analysis-tmpl ====================
 # Competitive Analysis Report: {{Project/Product Name}}
+
+[[LLM: The default path and filename unless specified is docs/competitor-analysis.md]]
 
 [[LLM: This template guides comprehensive competitor analysis. Start by understanding the user's competitive intelligence needs and strategic objectives. Help them identify and prioritize competitors before diving into detailed analysis.]]
 

@@ -1,49 +1,54 @@
 name: tech-lead-workflow
 version: 1.0.0
-pack_type: agent-enhancement
 description: Agent Enhancement Extension: Rebalances BMAD workflow with collaborative just-in-time technical elaboration. Provides enhanced agents for high-level architecture, business-focused stories, and tech lead refinement. No orchestrator required - users interact with enhanced agents manually.
-author: BMAD Community
-bmad_version: 4.6.0
+author: BMAD Team
 files:
-  agents:
-    - architect.md
-    - sm.md
-    - tech-lead.md
-  agent-teams:
-    - tech-lead-workflow-team.yml
-  tasks:
-    - story-enhancement.md
-    - technical-decision-capture.md
-    - implementation-planning.md
-    - high-level-story-creation.md
-    - story-refinement.md
-  templates:
-    - high-level-architecture-tmpl.md
-    - framework-selection-tmpl.md
-    - quality-attributes-tmpl.md
-    - high-level-story-tmpl.md
-    - story-acceptance-criteria-tmpl.md
-    - story-refinement-tmpl.md
-    - tech-decision-tmpl.md
-    - implementation-plan-tmpl.md
-    - tech-lead-knowledge-base-tmpl.md
-  checklists:
-    - high-level-architecture-checklist.md
-    - high-level-story-checklist.md
-    - story-refinement-checklist.md
-required_data:
-  - filename: technical-preferences.md
-    description: Team's technology preferences and constraints (already exists in BMAD)
-    location: bmad-core/data/
+  - source: agents/architect.md
+    destination: .bmad-core/agents/architect.md
+  - source: agents/sm.md
+    destination: .bmad-core/agents/sm.md
+  - source: agents/tech-lead.md
+    destination: .bmad-core/agents/tech-lead.md
+  - source: agent-teams/tech-lead-workflow-team.yml
+    destination: .bmad-core/agent-teams/tech-lead-workflow-team.yml
+  - source: tasks/story-enhancement.md
+    destination: .bmad-core/tasks/story-enhancement.md
+  - source: tasks/technical-decision-capture.md
+    destination: .bmad-core/tasks/technical-decision-capture.md
+  - source: tasks/implementation-planning.md
+    destination: .bmad-core/tasks/implementation-planning.md
+  - source: tasks/high-level-story-creation.md
+    destination: .bmad-core/tasks/high-level-story-creation.md
+  - source: tasks/story-refinement.md
+    destination: .bmad-core/tasks/story-refinement.md
+  - source: templates/high-level-architecture-tmpl.md
+    destination: .bmad-core/templates/high-level-architecture-tmpl.md
+  - source: templates/framework-selection-tmpl.md
+    destination: .bmad-core/templates/framework-selection-tmpl.md
+  - source: templates/quality-attributes-tmpl.md
+    destination: .bmad-core/templates/quality-attributes-tmpl.md
+  - source: templates/high-level-story-tmpl.md
+    destination: .bmad-core/templates/high-level-story-tmpl.md
+  - source: templates/story-acceptance-criteria-tmpl.md
+    destination: .bmad-core/templates/story-acceptance-criteria-tmpl.md
+  - source: templates/story-refinement-tmpl.md
+    destination: .bmad-core/templates/story-refinement-tmpl.md
+  - source: templates/tech-decision-tmpl.md
+    destination: .bmad-core/templates/tech-decision-tmpl.md
+  - source: templates/implementation-plan-tmpl.md
+    destination: .bmad-core/templates/implementation-plan-tmpl.md
+  - source: templates/tech-lead-knowledge-base-tmpl.md
+    destination: .bmad-core/templates/tech-lead-knowledge-base-tmpl.md
+  - source: checklists/high-level-architecture-checklist.md
+    destination: .bmad-core/checklists/high-level-architecture-checklist.md
+  - source: checklists/high-level-story-checklist.md
+    destination: .bmad-core/checklists/high-level-story-checklist.md
+  - source: checklists/story-refinement-checklist.md
+    destination: .bmad-core/checklists/story-refinement-checklist.md
 dependencies:
   - bmad-orchestrator
   - sm
   - dev
-overrides:
-  - agent: architect
-    reason: Replaces detailed architect with high-level strategic focus
-  - agent: sm
-    reason: Replaces detailed scrum master with business-focused story creation
 post_install_message: |
   Tech Lead Workflow Extension ready!
 

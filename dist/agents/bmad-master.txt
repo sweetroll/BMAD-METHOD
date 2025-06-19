@@ -2441,6 +2441,8 @@ Document sharded successfully:
 
 [[LLM: If available, review any provided relevant documents to gather all relevant context before beginning. If at a minimum you cannot local `docs/prd.md` ask the user what docs will provide the basis for the architecture.]]
 
+[[LLM: The default path and filename unless specified is docs/architecture.md]]
+
 ## Introduction
 
 [[LLM: This section establishes the document's purpose and scope. Keep the content below but ensure project name is properly substituted.
@@ -3216,6 +3218,8 @@ Note: Basic info goes in Coding Standards for dev agent. This detailed section i
 ==================== START: templates#brownfield-architecture-tmpl ====================
 # {{Project Name}} Brownfield Enhancement Architecture
 
+[[LLM: The default path and filename unless specified is docs/architecture.md]]
+
 [[LLM: IMPORTANT - SCOPE AND ASSESSMENT REQUIRED:
 
 This architecture document is for SIGNIFICANT enhancements to existing projects that require comprehensive architectural planning. Before proceeding:
@@ -3761,6 +3765,8 @@ Present risk assessment and apply `tasks#advanced-elicitation` protocol]]
 ==================== START: templates#brownfield-prd-tmpl ====================
 # {{Project Name}} Brownfield Enhancement PRD
 
+[[LLM: The default path and filename unless specified is docs/prd.md]]
+
 [[LLM: IMPORTANT - SCOPE ASSESSMENT REQUIRED:
 
 This PRD is for SIGNIFICANT enhancements to existing projects that require comprehensive planning and multiple stories. Before proceeding:
@@ -4003,6 +4009,8 @@ so that {{benefit}}.
 
 ==================== START: templates#competitor-analysis-tmpl ====================
 # Competitive Analysis Report: {{Project/Product Name}}
+
+[[LLM: The default path and filename unless specified is docs/competitor-analysis.md]]
 
 [[LLM: This template guides comprehensive competitor analysis. Start by understanding the user's competitive intelligence needs and strategic objectives. Help them identify and prioritize competitors before diving into detailed analysis.]]
 
@@ -4296,6 +4304,8 @@ These replace the standard elicitation options when working on competitive analy
 ==================== START: templates#front-end-architecture-tmpl ====================
 # {{Project Name}} Frontend Architecture Document
 
+[[LLM: The default path and filename unless specified is docs/ui-architecture.md]]
+
 [[LLM: Review provided documents including PRD, UX-UI Specification, and main Architecture Document. Focus on extracting technical implementation details needed for AI frontend tools and developer agents. Ask the user for any of these documents if you are unable to locate and were not provided.]]
 
 ## Template and Framework Selection
@@ -4471,6 +4481,8 @@ Document the starter template decision and any constraints it imposes before pro
 
 ==================== START: templates#front-end-spec-tmpl ====================
 # {{Project Name}} UI/UX Specification
+
+[[LLM: The default path and filename unless specified is docs/front-end-spec.md]]
 
 [[LLM: Review provided documents including Project Brief, PRD, and any user research to gather context. Focus on understanding user needs, pain points, and desired outcomes before beginning the specification.]]
 
@@ -4885,6 +4897,8 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 
 ==================== START: templates#fullstack-architecture-tmpl ====================
 # {{Project Name}} Fullstack Architecture Document
+
+[[LLM: The default path and filename unless specified is docs/architecture.md]]
 
 [[LLM: If available, review any provided relevant documents to gather all relevant context before beginning. At minimum, you should have access to docs/prd.md and docs/front-end-spec.md. Ask the user for any documents you need but cannot locate. This template creates a unified architecture that covers both backend and frontend concerns to guide AI-driven fullstack development.]]
 
@@ -5905,6 +5919,8 @@ After presenting this section, apply `tasks#advanced-elicitation` protocol]]
 ==================== START: templates#market-research-tmpl ====================
 # Market Research Report: {{Project/Product Name}}
 
+[[LLM: The default path and filename unless specified is docs/market-research.md]]
+
 [[LLM: This template guides the creation of a comprehensive market research report. Begin by understanding what market insights the user needs and why. Work through each section systematically, using the appropriate analytical frameworks based on the research objectives.]]
 
 ## Executive Summary
@@ -6169,6 +6185,8 @@ These replace the standard elicitation options when working on market research d
 ==================== START: templates#prd-tmpl ====================
 # {{Project Name}} Product Requirements Document (PRD)
 
+[[LLM: The default path and filename unless specified is docs/prd.md]]
+
 [[LLM: If available, review any provided document or ask if any are optionally available: Project Brief]]
 
 ## Goals and Background Context
@@ -6371,6 +6389,8 @@ so that {{benefit}}.
 
 ==================== START: templates#project-brief-tmpl ====================
 # Project Brief: {{Project Name}}
+
+[[LLM: The default path and filename unless specified is docs/brief.md]]
 
 [[LLM: This template guides creation of a comprehensive Project Brief that serves as the foundational input for product development.
 

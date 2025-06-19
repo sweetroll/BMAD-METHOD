@@ -99,6 +99,178 @@ dependencies:
 ```
 ==================== END: agents#sm ====================
 
+==================== START: tasks#create-doc ====================
+# Create Document from Template Task
+
+## Purpose
+
+- Generate documents from any specified template following embedded instructions from the perspective of the selected agent persona
+
+## Instructions
+
+### 1. Identify Template and Context
+
+- Determine which template to use (user-provided or list available for selection to user)
+
+  - Agent-specific templates are listed in the agent's dependencies under `templates`. For each template listed, consider it a document the agent can create. So if an agent has:
+
+    @{example}
+    dependencies:
+    templates: - prd-tmpl - architecture-tmpl
+    @{/example}
+
+    You would offer to create "PRD" and "Architecture" documents when the user asks what you can help with.
+
+- Gather all relevant inputs, or ask for them, or else rely on user providing necessary details to complete the document
+- Understand the document purpose and target audience
+
+### 2. Determine Interaction Mode
+
+Confirm with the user their preferred interaction style:
+
+- **Incremental:** Work through chunks of the document.
+- **YOLO Mode:** Draft complete document making reasonable assumptions in one shot. (Can be entered also after starting incremental by just typing /yolo)
+
+### 3. Execute Template
+
+- Load specified template from `templates#*` or the /templates directory
+- Follow ALL embedded LLM instructions within the template
+- Process template markup according to `utils#template-format` conventions
+
+### 4. Template Processing Rules
+
+#### CRITICAL: Never display template markup, LLM instructions, or examples to users
+
+- Replace all {{placeholders}} with actual content
+- Execute all [[LLM: instructions]] internally
+- Process `<<REPEAT>>` sections as needed
+- Evaluate ^^CONDITION^^ blocks and include only if applicable
+- Use @{examples} for guidance but never output them
+
+### 5. Content Generation
+
+- **Incremental Mode**: Present each major section for review before proceeding
+- **YOLO Mode**: Generate all sections, then review complete document with user
+- Apply any elicitation protocols specified in template
+- Incorporate user feedback and iterate as needed
+
+### 6. Validation
+
+If template specifies a checklist:
+
+- Run the appropriate checklist against completed document
+- Document completion status for each item
+- Address any deficiencies found
+- Present validation summary to user
+
+### 7. Final Presentation
+
+- Present clean, formatted content only
+- Ensure all sections are complete
+- DO NOT truncate or summarize content
+- Begin directly with document content (no preamble)
+- Include any handoff prompts specified in template
+
+## Important Notes
+
+- Template markup is for AI processing only - never expose to users
+==================== END: tasks#create-doc ====================
+
+==================== START: tasks#advanced-elicitation ====================
+# Advanced Elicitation Task
+
+## Purpose
+
+- Provide optional reflective and brainstorming actions to enhance content quality
+- Enable deeper exploration of ideas through structured elicitation techniques
+- Support iterative refinement through multiple analytical perspectives
+
+## Task Instructions
+
+### 1. Section Context and Review
+
+[[LLM: When invoked after outputting a section:
+
+1. First, provide a brief 1-2 sentence summary of what the user should look for in the section just presented (e.g., "Please review the technology choices for completeness and alignment with your project needs. Pay special attention to version numbers and any missing categories.")
+
+2. If the section contains Mermaid diagrams, explain each diagram briefly before offering elicitation options (e.g., "The component diagram shows the main system modules and their interactions. Notice how the API Gateway routes requests to different services.")
+
+3. If the section contains multiple distinct items (like multiple components, multiple patterns, etc.), inform the user they can apply elicitation actions to:
+
+   - The entire section as a whole
+   - Individual items within the section (specify which item when selecting an action)
+
+4. Then present the action list as specified below.]]
+
+### 2. Ask for Review and Present Action List
+
+[[LLM: Ask the user to review the drafted section. In the SAME message, inform them that they can suggest additions, removals, or modifications, OR they can select an action by number from the 'Advanced Reflective, Elicitation & Brainstorming Actions'. If there are multiple items in the section, mention they can specify which item(s) to apply the action to. Then, present ONLY the numbered list (0-9) of these actions. Conclude by stating that selecting 9 will proceed to the next section. Await user selection. If an elicitation action (0-8) is chosen, execute it and then re-offer this combined review/elicitation choice. If option 9 is chosen, or if the user provides direct feedback, proceed accordingly.]]
+
+**Present the numbered list (0-9) with this exact format:**
+
+```text
+**Advanced Reflective, Elicitation & Brainstorming Actions**
+Choose an action (0-9 - 9 to bypass - HELP for explanation of these options):
+
+0. Expand or Contract for Audience
+1. Explain Reasoning (CoT Step-by-Step)
+2. Critique and Refine
+3. Analyze Logical Flow and Dependencies
+4. Assess Alignment with Overall Goals
+5. Identify Potential Risks and Unforeseen Issues
+6. Challenge from Critical Perspective (Self or Other Persona)
+7. Explore Diverse Alternatives (ToT-Inspired)
+8. Hindsight is 20/20: The 'If Only...' Reflection
+9. Proceed / No Further Actions
+```
+
+### 2. Processing Guidelines
+
+**Do NOT show:**
+
+- The full protocol text with `[[LLM: ...]]` instructions
+- Detailed explanations of each option unless executing or the user asks, when giving the definition you can modify to tie its relevance
+- Any internal template markup
+
+**After user selection from the list:**
+
+- Execute the chosen action according to the protocol instructions below
+- Ask if they want to select another action or proceed with option 9 once complete
+- Continue until user selects option 9 or indicates completion
+
+## Action Definitions
+
+0. Expand or Contract for Audience
+   [[LLM: Ask the user whether they want to 'expand' on the content (add more detail, elaborate) or 'contract' it (simplify, clarify, make more concise). Also, ask if there's a specific target audience they have in mind. Once clarified, perform the expansion or contraction from your current role's perspective, tailored to the specified audience if provided.]]
+
+1. Explain Reasoning (CoT Step-by-Step)
+   [[LLM: Explain the step-by-step thinking process, characteristic of your role, that you used to arrive at the current proposal for this content.]]
+
+2. Critique and Refine
+   [[LLM: From your current role's perspective, review your last output or the current section for flaws, inconsistencies, or areas for improvement, and then suggest a refined version reflecting your expertise.]]
+
+3. Analyze Logical Flow and Dependencies
+   [[LLM: From your role's standpoint, examine the content's structure for logical progression, internal consistency, and any relevant dependencies. Confirm if elements are presented in an effective order.]]
+
+4. Assess Alignment with Overall Goals
+   [[LLM: Evaluate how well the current content contributes to the stated overall goals of the document, interpreting this from your specific role's perspective and identifying any misalignments you perceive.]]
+
+5. Identify Potential Risks and Unforeseen Issues
+   [[LLM: Based on your role's expertise, brainstorm potential risks, overlooked edge cases, or unintended consequences related to the current content or proposal.]]
+
+6. Challenge from Critical Perspective (Self or Other Persona)
+   [[LLM: Adopt a critical perspective on the current content. If the user specifies another role or persona (e.g., 'as a customer', 'as [Another Persona Name]'), critique the content or play devil's advocate from that specified viewpoint. If no other role is specified, play devil's advocate from your own current persona's viewpoint, arguing against the proposal or current content and highlighting weaknesses or counterarguments specific to your concerns. This can also randomly include YAGNI when appropriate, such as when trimming the scope of an MVP, the perspective might challenge the need for something to cut MVP scope.]]
+
+7. Explore Diverse Alternatives (ToT-Inspired)
+   [[LLM: From your role's perspective, first broadly brainstorm a range of diverse approaches or solutions to the current topic. Then, from this wider exploration, select and present 2 distinct alternatives, detailing the pros, cons, and potential implications you foresee for each.]]
+
+8. Hindsight is 20/20: The 'If Only...' Reflection
+   [[LLM: In your current persona, imagine it's a retrospective for a project based on the current content. What's the one 'if only we had known/done X...' that your role would humorously or dramatically highlight, along with the imagined consequences?]]
+
+9. Proceed / No Further Actions
+   [[LLM: Acknowledge the user's choice to finalize the current work, accept the AI's last output as is, or move on to the next step without selecting another action from this list. Prepare to proceed accordingly.]]
+==================== END: tasks#advanced-elicitation ====================
+
 ==================== START: tasks#high-level-story-creation ====================
 # High-Level Story Creation Task
 
@@ -360,6 +532,7 @@ Create high-level user stories that focus on business value, user outcomes, and 
 # High-Level User Story Template
 
 ## Story Overview
+
 - **Story ID**: [STORY_ID]
 - **Epic**: [EPIC_NAME]
 - **Story Title**: [STORY_TITLE]
@@ -375,38 +548,47 @@ Create high-level user stories that focus on business value, user outcomes, and 
 ## Business Context
 
 ### Problem Statement
+
 [DESCRIBE_THE_BUSINESS_PROBLEM_OR_OPPORTUNITY_THIS_STORY_ADDRESSES]
 
 ### User Value
+
 [EXPLAIN_THE_VALUE_THIS_DELIVERS_TO_THE_USER]
 
 ### Business Value
+
 [EXPLAIN_THE_VALUE_THIS_DELIVERS_TO_THE_BUSINESS]
 
 ## Acceptance Criteria
 
 ### Must Have (Critical)
+
 - [ ] [ACCEPTANCE_CRITERION_1]
 - [ ] [ACCEPTANCE_CRITERION_2]
 - [ ] [ACCEPTANCE_CRITERION_3]
 
 ### Should Have (Important)
+
 - [ ] [ACCEPTANCE_CRITERION_4]
 - [ ] [ACCEPTANCE_CRITERION_5]
 
 ### Could Have (Nice to Have)
+
 - [ ] [ACCEPTANCE_CRITERION_6]
 - [ ] [ACCEPTANCE_CRITERION_7]
 
 ## User Journey Context
 
 ### Before This Story
+
 [WHAT_IS_THE_USER_EXPERIENCE_BEFORE_THIS_FEATURE]
 
 ### After This Story
+
 [WHAT_WILL_THE_USER_EXPERIENCE_BE_AFTER_THIS_FEATURE]
 
 ### User Flow
+
 1. [STEP_1_IN_USER_JOURNEY]
 2. [STEP_2_IN_USER_JOURNEY]
 3. [STEP_3_IN_USER_JOURNEY]
@@ -415,49 +597,59 @@ Create high-level user stories that focus on business value, user outcomes, and 
 ## Business Rules
 
 ### Functional Rules
+
 - [BUSINESS_RULE_1]
 - [BUSINESS_RULE_2]
 - [BUSINESS_RULE_3]
 
 ### Data Rules
+
 - [DATA_RULE_1]
 - [DATA_RULE_2]
 
 ### Validation Rules
+
 - [VALIDATION_RULE_1]
 - [VALIDATION_RULE_2]
 
 ## Success Metrics
 
 ### User Success Metrics
+
 - [HOW_WILL_WE_MEASURE_USER_SUCCESS]
 - [WHAT_USER_BEHAVIOR_INDICATES_SUCCESS]
 
 ### Business Success Metrics
+
 - [HOW_WILL_WE_MEASURE_BUSINESS_SUCCESS]
 - [WHAT_BUSINESS_METRICS_SHOULD_IMPROVE]
 
 ## Edge Cases & Scenarios
 
 ### Happy Path
+
 [DESCRIBE_THE_IDEAL_USER_SCENARIO]
 
 ### Alternative Paths
+
 - [ALTERNATIVE_SCENARIO_1]
 - [ALTERNATIVE_SCENARIO_2]
 
 ### Error Scenarios
+
 - [ERROR_SCENARIO_1]
 - [ERROR_SCENARIO_2]
 
 ## Dependencies & Assumptions
 
 ### Dependencies
+
 - [DEPENDENCY_ON_OTHER_STORIES]
 - [DEPENDENCY_ON_EXTERNAL_SYSTEMS]
 - [DEPENDENCY_ON_DATA_OR_CONTENT]
 
 ### Assumptions
+
 - [ASSUMPTION_1]
 - [ASSUMPTION_2]
 - [ASSUMPTION_3]
@@ -465,14 +657,17 @@ Create high-level user stories that focus on business value, user outcomes, and 
 ## Questions for Tech Lead Refinement
 
 ### Technical Questions
+
 - [TECHNICAL_QUESTION_1]
 - [TECHNICAL_QUESTION_2]
 
 ### Implementation Questions
+
 - [IMPLEMENTATION_QUESTION_1]
 - [IMPLEMENTATION_QUESTION_2]
 
 ### Integration Questions
+
 - [INTEGRATION_QUESTION_1]
 - [INTEGRATION_QUESTION_2]
 
@@ -485,6 +680,7 @@ Create high-level user stories that focus on business value, user outcomes, and 
 - **Tech Lead**: [TECH_LEAD_NAME_WHEN_REFINED]
 
 ### Status Workflow
+
 1. **HIGH_LEVEL** - Story created by Scrum Master with business context
 2. **APPROVED_FOR_REFINEMENT** - Manual approval by user to begin tech lead collaboration
 3. **IN_REFINEMENT** - Tech Lead actively working with developer on technical approach
@@ -494,33 +690,40 @@ Create high-level user stories that focus on business value, user outcomes, and 
 7. **DONE** - Story completed and validated
 
 ### Manual Review Gates
+
 - **Gate 1**: HIGH_LEVEL → APPROVED_FOR_REFINEMENT (User manually updates status)
 - **Gate 2**: PENDING_DEVELOPMENT_APPROVAL → APPROVED (User manually updates status)
 
 ## Notes
 
 ### Business Notes
+
 [ANY_ADDITIONAL_BUSINESS_CONTEXT_OR_CONSIDERATIONS]
 
 ### User Experience Notes
+
 [ANY_UX_CONSIDERATIONS_OR_DESIGN_NOTES]
 
 ### Stakeholder Input
+
 [ANY_INPUT_FROM_STAKEHOLDERS_OR_PRODUCT_OWNERS]
 
 ---
 
 ## Tech Lead Enhancement Section
 
-*This section is added by the Tech Lead after collaborative refinement to bridge business requirements with actionable development tasks.*
+_This section is added by the Tech Lead after collaborative refinement to bridge business requirements with actionable development tasks._
 
 ### Technical Approach
+
 [TECH_LEAD_DOCUMENTS_AGREED_TECHNICAL_APPROACH]
 
 ### Developer Implementation Steps
 
 #### Phase 1: [PHASE_NAME]
+
 - [ ] **Task 1**: [SPECIFIC_DEVELOPMENT_TASK]
+
   - **Files to modify**: [LIST_OF_FILES]
   - **Technical notes**: [IMPLEMENTATION_GUIDANCE]
   - **Acceptance criteria**: [HOW_TO_VERIFY_COMPLETION]
@@ -531,25 +734,30 @@ Create high-level user stories that focus on business value, user outcomes, and 
   - **Acceptance criteria**: [HOW_TO_VERIFY_COMPLETION]
 
 #### Phase 2: [PHASE_NAME]
+
 - [ ] **Task 3**: [SPECIFIC_DEVELOPMENT_TASK]
   - **Files to modify**: [LIST_OF_FILES]
   - **Technical notes**: [IMPLEMENTATION_GUIDANCE]
   - **Acceptance criteria**: [HOW_TO_VERIFY_COMPLETION]
 
 ### Technical Decisions Made
+
 - **Decision 1**: [DECISION_AND_RATIONALE]
 - **Decision 2**: [DECISION_AND_RATIONALE]
 
 ### Architecture Integration Points
+
 - [HOW_THIS_INTEGRATES_WITH_EXISTING_ARCHITECTURE]
 - [DEPENDENCIES_ON_OTHER_COMPONENTS]
 
 ### Testing Strategy
+
 - **Unit Tests**: [WHAT_NEEDS_UNIT_TESTING]
 - **Integration Tests**: [WHAT_NEEDS_INTEGRATION_TESTING]
 - **User Acceptance**: [HOW_BUSINESS_STAKEHOLDERS_VALIDATE]
 
 ### Definition of Done
+
 - [ ] All development tasks completed
 - [ ] Code reviewed and approved
 - [ ] Tests written and passing
@@ -558,6 +766,7 @@ Create high-level user stories that focus on business value, user outcomes, and 
 - [ ] Documentation updated
 
 ### Story Refinement History
+
 - **Refined by**: [TECH_LEAD_NAME]
 - **Refinement date**: [DATE]
 - **Developer collaboration**: [DEVELOPER_NAMES]
@@ -569,9 +778,10 @@ Create high-level user stories that focus on business value, user outcomes, and 
 
 ## For Initial Tech Lead Refinement
 
-*This high-level story focuses on business value and user outcomes. The Tech Lead will add the enhancement section above after collaborative refinement with developers.*
+_This high-level story focuses on business value and user outcomes. The Tech Lead will add the enhancement section above after collaborative refinement with developers._
 
 ### Areas for Tech Lead Collaboration:
+
 - Technical approach and architecture alignment
 - Implementation complexity and effort estimation
 - Technical dependencies and integration points
@@ -1010,3 +1220,82 @@ Focus on business clarity and user value - technical implementation will be coll
 - **NEEDS BUSINESS CLARIFICATION**: Story requires business updates before refinement (see issues)
 - **BLOCKED**: External business information or decisions required (specify what information)
 ==================== END: checklists#high-level-story-checklist ====================
+
+==================== START: data#bmad-kb ====================
+# BMAD Knowledge Base
+
+## Overview
+
+BMAD-METHOD (Breakthrough Method of Agile AI-driven Development) is a framework that combines AI agents with Agile development methodologies. The v4 system introduces a modular architecture with improved dependency management, bundle optimization, and support for both web and IDE environments.
+
+### Key Features
+
+- **Modular Agent System**: Specialized AI agents for each Agile role
+- **Build System**: Automated dependency resolution and optimization
+- **Dual Environment Support**: Optimized for both web UIs and IDEs
+- **Reusable Resources**: Portable templates, tasks, and checklists
+- **Slash Command Integration**: Quick agent switching and control
+
+## Core Philosophy
+
+### Vibe CEO'ing
+
+You are the "Vibe CEO" - thinking like a CEO with unlimited resources and a singular vision. Your AI agents are your high-powered team, and your role is to:
+
+- **Direct**: Provide clear instructions and objectives
+- **Refine**: Iterate on outputs to achieve quality
+- **Oversee**: Maintain strategic alignment across all agents
+
+### Core Principles
+
+1. **MAXIMIZE_AI_LEVERAGE**: Push the AI to deliver more. Challenge outputs and iterate.
+2. **QUALITY_CONTROL**: You are the ultimate arbiter of quality. Review all outputs.
+3. **STRATEGIC_OVERSIGHT**: Maintain the high-level vision and ensure alignment.
+4. **ITERATIVE_REFINEMENT**: Expect to revisit steps. This is not a linear process.
+5. **CLEAR_INSTRUCTIONS**: Precise requests lead to better outputs.
+6. **DOCUMENTATION_IS_KEY**: Good inputs (briefs, PRDs) lead to good outputs.
+7. **START_SMALL_SCALE_FAST**: Test concepts, then expand.
+8. **EMBRACE_THE_CHAOS**: Adapt and overcome challenges.
+
+## IDE Development Workflow
+
+1. Shard the PRD (And Architecture documents if they exist also based on workflow type) using the Doc Shard task. The BMad-Master agent can help you do this. You will select the task, provide the doc to shard and the output folder. for example: `BMad Master, please Shard the docs/prd.md to the doc/prd/ folder` - this should ask you to use the md-tree-parser which is recommended, but either way shoudl result in multiple documents being created in the folder docs/prd.
+2. If you have fullstack, front end and or back end architecture documents you will want to follow the same thing, but shard all of these to an architecture folder instead of a prd folder.
+3. Ensure that you have at least one epic-n.md file in your prd folder, with the stories in order to develop.
+4. The docs or architecture folder or prd folder should have a source tree document and coding standards at a minimum. These are used by the dev agent, and the many other sharded docs are used by the SM agent.
+5. Use a new chat window to allow the SM agent to `draft the next story`.
+6. If you agree the story is correct, mark it as approved in the status field, and then start a new chat window with the dev agent.
+7. Ask the dev agent to implement the next story. If you draft the story file into the chat it will save time for the dev to have to find what the next one is. The dev should follow the tasks and subtasks marking them off as they are completed. The dev agent will also leave notes potentially for the SM to know about any deviations that might have occured to help draft the next story.
+8. Once complete and you have verified, mark it done, and start a new chat. Ask the SM to draft the next story - repeating the cycle.
+
+With this work flow, there is only 1 story in progress at a time, worked sequentially.
+==================== END: data#bmad-kb ====================
+
+==================== START: utils#template-format ====================
+# Template Format Conventions
+
+Templates in the BMAD method use standardized markup for AI processing. These conventions ensure consistent document generation.
+
+## Template Markup Elements
+
+- **{{placeholders}}**: Variables to be replaced with actual content
+- **[[LLM: instructions]]**: Internal processing instructions for AI agents (never shown to users)
+- **REPEAT** sections: Content blocks that may be repeated as needed
+- **^^CONDITION^^** blocks: Conditional content included only if criteria are met
+- **@{examples}**: Example content for guidance (never output to users)
+
+## Processing Rules
+
+- Replace all {{placeholders}} with project-specific content
+- Execute all [[LLM: instructions]] internally without showing users
+- Process conditional and repeat blocks as specified
+- Use examples for guidance but never include them in final output
+- Present only clean, formatted content to users
+
+## Critical Guidelines
+
+- **NEVER display template markup, LLM instructions, or examples to users**
+- Template elements are for AI processing only
+- Focus on faithful template execution and clean output
+- All template-specific instructions are embedded within templates
+==================== END: utils#template-format ====================
